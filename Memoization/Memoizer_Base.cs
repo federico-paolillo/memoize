@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FuncUtils.Memoization
+namespace Memoization
 {
 	/// <summary>
 	/// Provides infrastructure to function memoization.
@@ -55,7 +55,7 @@ namespace FuncUtils.Memoization
 			//Are they the same thing ?
 			if (object.ReferenceEquals(currentArg, lastArg)) return true;
 
-			//Standard Equal comparison, will handle if left or right is null
+			//Standard Equal comparison, will handle if either left or right is null
 			return object.Equals(currentArg, lastArg);
 		}
 

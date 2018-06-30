@@ -1,9 +1,8 @@
-using FuncUtils.Memoization;
 using Moq;
 using System;
 using Xunit;
 
-namespace FuncUtils.Memoize.Tests
+namespace Memoization.Tests
 {
 	public class Memoizer_1_Test
     {
@@ -79,17 +78,40 @@ namespace FuncUtils.Memoize.Tests
 		public void Converting_to_Func_implicitly_returns_a_reference_the_Call_method()
 		{
 			//Arrange
-			var fnSpy = new Mock<Func<object, int>>();
+			var fnSpy = new Mock<Func<int, int>>();
 
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
-			Func<object, int> asFunc = memoizedFn;
+			Func<int, int> asFunc = memoizedFn;
 
+			//Act
 			asFunc.Invoke(10);
 			asFunc.Invoke(10);
 			asFunc.Invoke(10);
 
+			//Assert
 			fnSpy.Verify(f => f(10), Times.Once());
+		}
+
+		[Fact]
+		public void Calling_reset_will_clear_all_memoized_information()
+		{
+			//Arrange
+			var fnSpy = new Mock<Func<int, int>>();
+
+			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
+
+			//Act
+			memoizedFn.Call(1);
+			memoizedFn.Call(1);
+			memoizedFn.Call(1);
+
+			memoizedFn.Reset();
+
+			memoizedFn.Call(1);
+
+			//Assert
+			fnSpy.Verify(f => f(1), Times.Exactly(2));
 		}
 	}
 }

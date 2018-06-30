@@ -328,3 +328,8 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+ #NCrunch
+ *.v3.ncrunchsolution
+ *.v3.ncrunchsolution.user
+ _NCrunch_Memoization/

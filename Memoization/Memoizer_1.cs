@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FuncUtils.Memoization
+namespace Memoization
 {
 	/// <summary>
 	/// A memoized Func with 1 argument
