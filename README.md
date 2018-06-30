@@ -11,6 +11,8 @@ _In computing, memoization [...] is an optimization technique used primarily to 
 Essentially we want to avoid executing a function again if its inputs do not change.  
 This repository provides helper methods to memoize a function that can take up to 2 parameters (for now).
 
+Also most of NuGet packages out there are outdated and do not target .NET Standard so they cannot be used with .NET Core.  
+
 # How do I use it ?
 
 Add an `using` for Memoization namespace.  
