@@ -53,6 +53,21 @@ Func<string, string> memoizedFnAsFunc = memoizedFn;
 
 ```
 
+Another thing to take into consideration is that **memoization might generate memory leaks**.  
+In case you want to clear any memoized parameter you can call `Reset` on a `Memoizer` instance.  
+This is also useful if you wish to execute the function again.
+
+# Tips on function memoization
+
+_Memoization works best if the parameters are immutable_.  
+Having immutable parameters allows us to compare them with a simple reference equal, improving performance.
+
+_A memoized function should not have side effects._  
+Memoization will prevent the function from executing if the inputs are the same therefore if you depend on some side effects resulting from the function execution you will lose them.  
+
+_A memoized function should be pure._  
+That means that the function result is the same if the inputs are the same, if the function was to depend on other context it would be impossible to memoize correctly as only parameters can be cached. 
+
 # Limitations
 
 Currently the following Func delegates are supported, the others will come in the future:
