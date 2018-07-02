@@ -1,6 +1,6 @@
 # Memoizer
 
-Provides Memoize C# functions easily.  
+Memoize C# functions easily.  
 No dependencies, targets [.NET Standard 1.1](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard1.1.md).  
 
 # Why ?
