@@ -70,11 +70,17 @@ That means that the function result is the same if the inputs are the same, if t
 
 # Limitations
 
-Currently the following Func delegates are supported, the others will come in the future:
+The memoization mechanism does not event try to be thread safe, like, at all. Keep that in mind.  
 
-- [x] Func<T1, TOut>
-- [x] Func<T1, T2, TOut>
-- [ ] Func<T1, T2, T3, TOut>
+Only the _last_ parameters used to invoke the function are recorded, if they change the function is evaluated again.  
+This is to make sure that the memoization does not use too much memory and that there is a reliable cache invalidation.  
+Therefore it is better if you memoize only functions that you know are called many times with the same parameters.  
+
+Currently only the following Func delegates are supported, the others will come eventually:
+
+- [X] Func<T1, TOut>
+- [X] Func<T1, T2, TOut>
+- [X] Func<T1, T2, T3, TOut>
 - [ ] Func<T1, T2, T3, T4, TOut>
 - [ ] Func<T1, T2, T3, T4, T5, TOut>
 - [ ] Func<T1, T2, T3, T4, T5, T6, TOut>
