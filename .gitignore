@@ -333,3 +333,4 @@ ASALocalRun/
  *.v3.ncrunchsolution
  *.v3.ncrunchsolution.user
  _NCrunch_Memoization/
+*.ncrunchsolution
