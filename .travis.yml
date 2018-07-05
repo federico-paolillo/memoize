@@ -4,4 +4,4 @@ dotnet: 2.1.300
 script:
  - dotnet restore
  - dotnet build
- - dotnet test
+ - dotnet test Memoization.Tests
