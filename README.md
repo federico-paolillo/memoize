@@ -5,6 +5,7 @@
 
 Memoize C# functions easily.  
 No dependencies, targets [.NET Standard 1.1](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard1.1.md).  
+All 16 Func delegates are supported and tested using source code generation.
 
 # Why ?
 
@@ -12,7 +13,7 @@ No dependencies, targets [.NET Standard 1.1](https://github.com/dotnet/standard/
 _In computing, memoization [...] is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again._
 
 Essentially we want to avoid executing a function again if its inputs do not change.  
-This repository provides helper methods to memoize a function that can take up to 2 parameters (for now).
+This repository provides helper methods to memoize a function that can take up to 16 parameters.
 
 Also most of NuGet packages out there are outdated and do not target .NET Standard so they cannot be used with .NET Core.  
 
@@ -78,23 +79,3 @@ The memoization mechanism does not event try to be thread safe, like, at all. Ke
 Only the _last_ parameters used to invoke the function are recorded, if they change the function is evaluated again.  
 This is to make sure that the memoization does not use too much memory and that there is a reliable cache invalidation.  
 Therefore it is better if you memoize only functions that you know are called many times with the same parameters.  
-
-Currently only the following Func delegates are supported, the others will come eventually:
-
-- [X] Func<T1, TOut>
-- [X] Func<T1, T2, TOut>
-- [X] Func<T1, T2, T3, TOut>
-- [ ] Func<T1, T2, T3, T4, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TOut>
-- [ ] Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TOut>
-

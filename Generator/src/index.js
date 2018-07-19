@@ -1,5 +1,8 @@
 const Rendering = require('./rendering');
 
-const genericArgumentsCount = Number(process.argv[2]);
+const typeOfOutput = process.argv[2];
+const genericArgumentsCount = Number(process.argv[3]);
 
-Rendering.renderMemoizerClassAsync(genericArgumentsCount).then(console.log);
+typeOfOutput === 'c' ? 
+    Rendering.renderMemoizerClassAsync(genericArgumentsCount).then(console.log) :
+    Rendering.renderMemoizerTestAsync(genericArgumentsCount).then(console.log) ;

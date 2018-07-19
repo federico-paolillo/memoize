@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using System;
 using Xunit;
 
@@ -6,20 +6,20 @@ namespace Memoization.Tests
 {
 	public class Memoizer_2_Test
     {
-		[Fact]
-		public void Call_invokes_original_function_the_first_time()
-		{
+        [Fact]
+        public void Call_invokes_original_function_the_first_time()
+        {
 			//Arrange
 			var fnSpy = new Mock<Func<int, int, int>>();
 
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act
-			memoizedFn.Call(2, 3);
+			memoizedFn.Call(0, 1);
 
 			//Assert
-			fnSpy.Verify(f => f(2, 3), Times.Once());
-		}
+			fnSpy.Verify(f => f(0, 1), Times.Once());
+        }
 
 		[Fact]
 		public void Call_does_not_invoke_original_function_if_the_arguments_are_Equal()
@@ -30,12 +30,12 @@ namespace Memoization.Tests
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act, call the function a few times
-			memoizedFn.Call(2, 3);
-			memoizedFn.Call(2, 3);
-			memoizedFn.Call(2, 3);
+			memoizedFn.Call(0, 1);
+			memoizedFn.Call(0, 1);
+			memoizedFn.Call(0, 1);
 
 			//Assert
-			fnSpy.Verify(f => f(2, 3), Times.Once());
+			fnSpy.Verify(f => f(0, 1), Times.Once());
 		}
 
 		[Fact]
@@ -47,14 +47,14 @@ namespace Memoization.Tests
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act, call the function a few times changing arguments
-			memoizedFn.Call(2, 2);
-			memoizedFn.Call(2, 2);
-			memoizedFn.Call(3, 3);
-			memoizedFn.Call(3, 3);
+			memoizedFn.Call(0, 1);
+			memoizedFn.Call(0, 1);
+			memoizedFn.Call(10, 11);
+			memoizedFn.Call(10, 11);
 
 			//Assert
-			fnSpy.Verify(f => f(2, 2), Times.Once());
-			fnSpy.Verify(f => f(3, 3), Times.Once());
+			fnSpy.Verify(f => f(0, 1), Times.Once());
+			fnSpy.Verify(f => f(10, 11), Times.Once());
 		}
 
 		[Fact]
@@ -66,12 +66,12 @@ namespace Memoization.Tests
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act, call the function a few times
-			memoizedFn.Call(null, string.Empty);
-			memoizedFn.Call(null, string.Empty);
-			memoizedFn.Call(null, string.Empty);
+			memoizedFn.Call(null, null);
+			memoizedFn.Call(null, null);
+			memoizedFn.Call(null, null);
 
 			//Assert
-			fnSpy.Verify(f => f(null, string.Empty), Times.Once());
+			fnSpy.Verify(f => f(null, null), Times.Once());
 		}
 
 		[Fact]
@@ -85,12 +85,12 @@ namespace Memoization.Tests
 			Func<int, int, int> asFunc = memoizedFn;
 
 			//Act
-			asFunc.Invoke(10, 11);
-			asFunc.Invoke(10, 11);
-			asFunc.Invoke(10, 11);
+			asFunc.Invoke(0, 1);
+			asFunc.Invoke(0, 1);
+			asFunc.Invoke(0, 1);
 
 			//Assert
-			fnSpy.Verify(f => f(10, 11), Times.Once());
+			fnSpy.Verify(f => f(0, 1), Times.Once());
 		}
 
 		[Fact]
@@ -102,16 +102,17 @@ namespace Memoization.Tests
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act
-			memoizedFn.Call(1, 2);
-			memoizedFn.Call(1, 2);
-			memoizedFn.Call(1, 2);
+			memoizedFn.Call(0, 1);
+			memoizedFn.Call(0, 1);
+			memoizedFn.Call(0, 1);
 
 			memoizedFn.Reset();
 
-			memoizedFn.Call(1, 2);
+			memoizedFn.Call(0, 1);
 
 			//Assert
-			fnSpy.Verify(f => f(1, 2), Times.Exactly(2));
+			fnSpy.Verify(f => f(0, 1), Times.Exactly(2));
 		}
 	}
 }
+

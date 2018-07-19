@@ -1,0 +1,117 @@
+using Moq;
+using System;
+using Xunit;
+
+namespace Memoization.Tests
+{
+	public class Memoizer_{{genericTypesCount}}_Test
+    {
+        [Fact]
+        public void Call_invokes_original_function_the_first_time()
+        {
+			//Arrange
+			var fnSpy = new Mock<Func<{{valueTypeFuncGenericParameters}}>>();
+
+			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
+
+			//Act
+			memoizedFn.Call({{firstRunParameters}});
+
+			//Assert
+			fnSpy.Verify(f => f({{firstRunParameters}}), Times.Once());
+        }
+
+		[Fact]
+		public void Call_does_not_invoke_original_function_if_the_arguments_are_Equal()
+		{
+			//Arrange
+			var fnSpy = new Mock<Func<{{valueTypeFuncGenericParameters}}>>();
+
+			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
+
+			//Act, call the function a few times
+			memoizedFn.Call({{firstRunParameters}});
+			memoizedFn.Call({{firstRunParameters}});
+			memoizedFn.Call({{firstRunParameters}});
+
+			//Assert
+			fnSpy.Verify(f => f({{firstRunParameters}}), Times.Once());
+		}
+
+		[Fact]
+		public void Call_invokes_original_function_when_arguments_changes()
+		{
+			//Arrange
+			var fnSpy = new Mock<Func<{{valueTypeFuncGenericParameters}}>>();
+
+			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
+
+			//Act, call the function a few times changing arguments
+			memoizedFn.Call({{firstRunParameters}});
+			memoizedFn.Call({{firstRunParameters}});
+			memoizedFn.Call({{secondRunParameters}});
+			memoizedFn.Call({{secondRunParameters}});
+
+			//Assert
+			fnSpy.Verify(f => f({{firstRunParameters}}), Times.Once());
+			fnSpy.Verify(f => f({{secondRunParameters}}), Times.Once());
+		}
+
+		[Fact]
+		public void Memoize_correctly_if_the_argument_is_null()
+		{
+			//Arrange
+			var fnSpy = new Mock<Func<{{referenceTypeFuncGenericParameters}}>>();
+
+			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
+
+			//Act, call the function a few times
+			memoizedFn.Call({{referenceTypeParameters}});
+			memoizedFn.Call({{referenceTypeParameters}});
+			memoizedFn.Call({{referenceTypeParameters}});
+
+			//Assert
+			fnSpy.Verify(f => f({{referenceTypeParameters}}), Times.Once());
+		}
+
+		[Fact]
+		public void Converting_to_Func_implicitly_returns_a_reference_the_Call_method()
+		{
+			//Arrange
+			var fnSpy = new Mock<Func<{{valueTypeFuncGenericParameters}}>>();
+
+			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
+
+			Func<{{valueTypeFuncGenericParameters}}> asFunc = memoizedFn;
+
+			//Act
+			asFunc.Invoke({{firstRunParameters}});
+			asFunc.Invoke({{firstRunParameters}});
+			asFunc.Invoke({{firstRunParameters}});
+
+			//Assert
+			fnSpy.Verify(f => f({{firstRunParameters}}), Times.Once());
+		}
+
+		[Fact]
+		public void Calling_reset_will_clear_all_memoized_information()
+		{
+			//Arrange
+			var fnSpy = new Mock<Func<{{valueTypeFuncGenericParameters}}>>();
+
+			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
+
+			//Act
+			memoizedFn.Call({{firstRunParameters}});
+			memoizedFn.Call({{firstRunParameters}});
+			memoizedFn.Call({{firstRunParameters}});
+
+			memoizedFn.Reset();
+
+			memoizedFn.Call({{firstRunParameters}});
+
+			//Assert
+			fnSpy.Verify(f => f({{firstRunParameters}}), Times.Exactly(2));
+		}
+	}
+}

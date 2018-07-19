@@ -15,10 +15,10 @@ namespace Memoization.Tests
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act
-			memoizedFn.Call(2);
+			memoizedFn.Call(0);
 
 			//Assert
-			fnSpy.Verify(f => f(2), Times.Once());
+			fnSpy.Verify(f => f(0), Times.Once());
         }
 
 		[Fact]
@@ -30,12 +30,12 @@ namespace Memoization.Tests
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act, call the function a few times
-			memoizedFn.Call(2);
-			memoizedFn.Call(2);
-			memoizedFn.Call(2);
+			memoizedFn.Call(0);
+			memoizedFn.Call(0);
+			memoizedFn.Call(0);
 
 			//Assert
-			fnSpy.Verify(f => f(2), Times.Once());
+			fnSpy.Verify(f => f(0), Times.Once());
 		}
 
 		[Fact]
@@ -47,14 +47,14 @@ namespace Memoization.Tests
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act, call the function a few times changing arguments
-			memoizedFn.Call(2);
-			memoizedFn.Call(2);
-			memoizedFn.Call(3);
-			memoizedFn.Call(3);
+			memoizedFn.Call(0);
+			memoizedFn.Call(0);
+			memoizedFn.Call(10);
+			memoizedFn.Call(10);
 
 			//Assert
-			fnSpy.Verify(f => f(2), Times.Once());
-			fnSpy.Verify(f => f(3), Times.Once());
+			fnSpy.Verify(f => f(0), Times.Once());
+			fnSpy.Verify(f => f(10), Times.Once());
 		}
 
 		[Fact]
@@ -85,12 +85,12 @@ namespace Memoization.Tests
 			Func<int, int> asFunc = memoizedFn;
 
 			//Act
-			asFunc.Invoke(10);
-			asFunc.Invoke(10);
-			asFunc.Invoke(10);
+			asFunc.Invoke(0);
+			asFunc.Invoke(0);
+			asFunc.Invoke(0);
 
 			//Assert
-			fnSpy.Verify(f => f(10), Times.Once());
+			fnSpy.Verify(f => f(0), Times.Once());
 		}
 
 		[Fact]
@@ -102,16 +102,17 @@ namespace Memoization.Tests
 			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
 
 			//Act
-			memoizedFn.Call(1);
-			memoizedFn.Call(1);
-			memoizedFn.Call(1);
+			memoizedFn.Call(0);
+			memoizedFn.Call(0);
+			memoizedFn.Call(0);
 
 			memoizedFn.Reset();
 
-			memoizedFn.Call(1);
+			memoizedFn.Call(0);
 
 			//Assert
-			fnSpy.Verify(f => f(1), Times.Exactly(2));
+			fnSpy.Verify(f => f(0), Times.Exactly(2));
 		}
 	}
 }
+

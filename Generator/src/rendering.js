@@ -5,7 +5,8 @@ const FS = require('fs');
 
 const readFileAsync = Utils.promisify(FS.readFile);
 
-const templatePath = 'src/templates/Memoizer_X.mustache';
+const classTemplatePath = 'src/templates/Memoizer_X.mustache';
+const testTemplatePath = 'src/templates/Memoizer_X_Test.mustache';
 
 /**
  * Asynchronously renders a Memoizer class with the number of parameters specified.
@@ -13,8 +14,23 @@ const templatePath = 'src/templates/Memoizer_X.mustache';
  */
 exports.renderMemoizerClassAsync = async function (genericTypesCount) {
 
-    const template = await readFileAsync(templatePath, 'utf8');
-    const data = Builder.build(genericTypesCount);
+    const template = await readFileAsync(classTemplatePath, 'utf8');
+    const data = Builder.buildClassData(genericTypesCount);
+
+    const result = Mustache.render(template, data);
+
+    return result;
+
+}
+
+/**
+ * Asynchronously renders a Memoizer test class with the number of parameters specified.
+ * @param {number} genericTypesCount Number of generic arguments of the C# class generated.
+ */
+exports.renderMemoizerTestAsync = async function (genericTypesCount) {
+
+    const template = await readFileAsync(testTemplatePath, 'utf8');
+    const data = Builder.buildTestData(genericTypesCount);
 
     const result = Mustache.render(template, data);
 
