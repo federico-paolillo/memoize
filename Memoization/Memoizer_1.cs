@@ -3,7 +3,7 @@
 namespace Memoization
 {
 	/// <summary>
-	/// A memoized Func with 1 argument
+	/// A memoized Func with 1 arguments
 	/// </summary>
 	public sealed class Memoizer<T1, TOut> : Memoizer
 	{

@@ -1,0 +1,15 @@
+{
+  "name": "memoize-gen",
+  "version": "1.0.0",
+  "description": "Generates Memoize C# classes and tests using Mustache",
+  "main": "src/index.js",
+  "author": "Federico Paolillo",
+  "license": "MIT",
+  "dependencies": {
+    "mustache": "^2.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}

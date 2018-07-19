@@ -334,3 +334,7 @@ ASALocalRun/
  *.v3.ncrunchsolution.user
  _NCrunch_Memoization/
 *.ncrunchsolution
+
+#Generation
+generator/node_modules/
+generator/gen_output/
