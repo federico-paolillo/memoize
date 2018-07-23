@@ -3,7 +3,7 @@
 
 # Memoizer
 
-Memoize C# functions easily.  
+Memoize C# functions with ease.  
 No dependencies, targets [.NET Standard 1.1](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard1.1.md).  
 All 16 Func delegates are supported and tested using source code generation.
 
