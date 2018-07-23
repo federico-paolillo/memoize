@@ -58,8 +58,9 @@ Func<string, string> memoizedFnAsFunc = memoizedFn;
 ```
 
 Another thing to take into consideration is that **memoization might generate memory leaks**.  
+
 In case you want to clear any memoized parameter you can call `Reset` on a `Memoizer` instance.  
-This is also useful if you wish to execute the function again.
+This is useful if you wish to force executing the function again or clear any retained memory.
 
 # Tips on function memoization
 
