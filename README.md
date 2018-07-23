@@ -1,6 +1,6 @@
 [![MIT License](https://img.shields.io/github/license/federico-paolillo/memoize.svg?style=flat-square)](https://github.com/federico-paolillo/memoize/blob/master/LICENSE)
 [![Travis branch](https://img.shields.io/travis/federico-paolillo/memoize/master.svg?style=flat-square)](https://travis-ci.org/federico-paolillo/memoize)
-[![NuGet](https://img.shields.io/nuget/v/FP.Memoization.svg)](https://www.nuget.org/packages/FP.Memoization/)
+[![NuGet](https://img.shields.io/nuget/v/FP.Memoization.svg?style=flat-square)](https://www.nuget.org/packages/FP.Memoization/)
 
 # Memoizer
 
