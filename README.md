@@ -1,9 +1,10 @@
 [![MIT License](https://img.shields.io/github/license/federico-paolillo/memoize.svg?style=flat-square)](https://github.com/federico-paolillo/memoize/blob/master/LICENSE)
 [![Travis branch](https://img.shields.io/travis/federico-paolillo/memoize/master.svg?style=flat-square)](https://travis-ci.org/federico-paolillo/memoize)
+[![NuGet](https://img.shields.io/nuget/v/FP.Memoization.svg?style=flat-square)](https://www.nuget.org/packages/FP.Memoization/)
 
 # Memoizer
 
-Memoize C# functions easily.  
+Memoize C# functions with ease.  
 No dependencies, targets [.NET Standard 1.1](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard1.1.md).  
 All 16 Func delegates are supported and tested using source code generation.
 
@@ -58,8 +59,9 @@ Func<string, string> memoizedFnAsFunc = memoizedFn;
 ```
 
 Another thing to take into consideration is that **memoization might generate memory leaks**.  
+
 In case you want to clear any memoized parameter you can call `Reset` on a `Memoizer` instance.  
-This is also useful if you wish to execute the function again.
+This is useful if you wish to force executing the function again or clear any retained memory.
 
 # Tips on function memoization
 
