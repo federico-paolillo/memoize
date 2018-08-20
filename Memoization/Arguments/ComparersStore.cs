@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Memoization.Arguments
 {
@@ -10,6 +11,8 @@ namespace Memoization.Arguments
 	{
 		private readonly Dictionary<Type, IEqualityComparerWrapper> comparerWrappers = new Dictionary<Type, IEqualityComparerWrapper>();
 
+		public static MethodInfo GetMethodInfo { get; } = typeof(ComparersStore).GetTypeInfo().GetDeclaredMethod(nameof(Get));
+
 		/// <summary>
 		/// Registers in the Store for later use the IEqualityComparer specified.
 		/// </summary>
@@ -17,9 +20,9 @@ namespace Memoization.Arguments
 		{
 			if (comparer == null) throw new ArgumentNullException(nameof(comparer), "An IEqualityComparer instance is required.");
 
-			var typeKey = typeof(T);
+			Type typeKey = typeof(T);
 
-			var comparerWrapper = new EqualityComparerWrapper<T>(comparer);
+			EqualityComparerWrapper<T> comparerWrapper = new EqualityComparerWrapper<T>(comparer);
 
 			//Adds or replaces the old comparer
 			comparerWrappers[typeKey] = comparerWrapper;
@@ -28,17 +31,17 @@ namespace Memoization.Arguments
 		/// <summary>
 		/// Returns the IEqualityComparer instance for the type specified or default comparer if none was registered.
 		/// </summary>
-		public IEqualityComparer<T> Get<T>()
+		public IEqualityComparerWrapper Get<T>()
 		{
-			var typeKey = typeof(T);
+			Type typeKey = typeof(T);
 
 			bool foundSomething = comparerWrappers.TryGetValue(typeKey, out IEqualityComparerWrapper maybeWrapper);
 
-			var maybeWrapperForType = maybeWrapper as EqualityComparerWrapper<T>;
+			EqualityComparerWrapper<T> maybeWrapperForType = maybeWrapper as EqualityComparerWrapper<T>;
 
-			if (maybeWrapperForType == null) return EqualityComparer<T>.Default;
+			if (maybeWrapperForType == null) return EqualityComparerWrapper<T>.Default;
 
-			return maybeWrapperForType.Comparer;
+			return maybeWrapperForType;
 		}
 	}
 }

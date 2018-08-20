@@ -9,7 +9,7 @@ namespace Memoization.Tests
 	public class ArgumentsComparerTest
 	{
 		[Fact]
-		public void Selects_the_correct_equality_comparer()
+		public void Selects_the_correct_equality_comparer_registered()
 		{
 			//Arrange
 			var stringComparerMock = new Mock<IEqualityComparer<string>>();
@@ -19,14 +19,15 @@ namespace Memoization.Tests
 			comparerStore.Add(stringComparerMock.Object);
 
 			//Act
-			var comparer = comparerStore.Get<string>();
+			var wrapper = comparerStore.Get<string>() as EqualityComparerWrapper<string>;
 
 			//Assert
-			comparer.Should().BeSameAs(stringComparerMock.Object);
+			wrapper.Should().NotBeNull();
+			wrapper.Comparer.Should().BeSameAs(stringComparerMock.Object);
 		}
 
 		[Fact]
-		public void Selects_the_default_equality_comparer_for_types_without_a_comparer()
+		public void Selects_the_default_equality_comparer_for_types_without_a_comparer_registered()
 		{
 			//Arrange
 			var comparerStore = new ComparersStore();
@@ -34,10 +35,11 @@ namespace Memoization.Tests
 			var defaultComparer = EqualityComparer<string>.Default;
 
 			//Act
-			var comparer = comparerStore.Get<string>();
+			var wrapper = comparerStore.Get<string>() as EqualityComparerWrapper<string>;
 
 			//Assert
-			comparer.Should().BeSameAs(defaultComparer);
+			wrapper.Should().NotBeNull();
+			wrapper.Comparer.Should().BeSameAs(defaultComparer);
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace Memoization.Arguments
 	/// </summary>
 	internal interface IEqualityComparerWrapper
 	{
-		bool Equals(object x, object y);
+		bool Compare(object x, object y);
 	}
 
 	/// <summary>
@@ -18,6 +18,8 @@ namespace Memoization.Arguments
 	/// </summary>
 	internal sealed class EqualityComparerWrapper<T> : IEqualityComparerWrapper
 	{
+		public static EqualityComparerWrapper<T> Default { get; } = new EqualityComparerWrapper<T>(EqualityComparer<T>.Default);
+
 		public IEqualityComparer<T> Comparer { get; }
 
 		public EqualityComparerWrapper(IEqualityComparer<T> equalityComparer)
@@ -25,6 +27,9 @@ namespace Memoization.Arguments
 			Comparer = equalityComparer ?? throw new ArgumentNullException(nameof(equalityComparer));
 		}
 
-		bool IEqualityComparerWrapper.Equals(object x, object y) => Comparer.Equals((T)x, (T)y);
+		public bool Compare(object x, object y)
+		{
+			return Comparer.Equals((T)x, (T)y);
+		}
 	}
 }

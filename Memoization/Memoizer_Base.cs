@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Memoization.Arguments;
+using System;
 
 namespace Memoization
 {
@@ -8,64 +9,83 @@ namespace Memoization
 	/// </summary>
 	public abstract partial class Memoizer
 	{
-		private object lastResult = null;
-		private object[] lastArgs = null;
+		private readonly ComparersStore comparersStore = new ComparersStore();
+
+		private object previousResult = null;
+		private object[] previousArguments = null;
 
 		/// <summary>
 		/// Checks if the last recorded arguments stored match the current arguments given.
 		/// </summary>
-		/// <param name="currentArgs">Args of the current call to check against the last recorded parameters.</param>
+		/// <param name="currentArguments">Args of the current call to check against the last recorded parameters.</param>
 		/// <remarks> Make sure to pass the parameters in the same order as they are given to the Func.</remarks>
 		/// <returns><code>true</code> if the current arguments equals the last recorded arguments.</returns>
-		protected bool ArgsMatchPreviousCall(params object[] currentArgs)
+		protected bool ArgsMatchPreviousCall(params object[] currentArguments)
 		{
-			if (lastArgs == null) return false;
-			if (lastArgs.Length != currentArgs.Length) throw new InvalidOperationException("There was a different amount of arguments stored sinc last time than what was supplied now.");
+			if (previousArguments == null) return false;
+			if (previousArguments.Length != currentArguments.Length) throw new InvalidOperationException("There was a different number of arguments supplied last time than what was supplied now.");
 
-			for (int i = 0; i < currentArgs.Length; i++)
-				if (!AreEqual(currentArgs[i], lastArgs[i])) return false;
+			for (int i = 0; i < currentArguments.Length; i++)
+				if (!AreEqual(currentArguments[i], previousArguments[i])) return false;
 
 			return true;
 		}
 
 		/// <summary>
 		/// Retrieves the last result stored and casts it to the type specified.
-		/// If there is not a last result stored an Exception is thrown
+		/// If there is not a last result stored an Exception is thrown.
 		/// </summary>
-		protected TResult LastResult<TResult>() => (TResult)lastResult;
+		protected TResult PreviousResult<TResult>()
+		{
+			return (TResult)previousResult;
+		}
 
 		/// <summary>
 		/// Saves the results specified on this instance.
 		/// Watch out for mem. leaks.
 		/// </summary>
-		protected void StoreResult(object result) => lastResult = result;
-
-		/// <summary>
-		/// Stores the array specified on this instance last arguments.
-		/// The array specified will be used to decide if to call or not the memoized function.
-		/// Watch out for mem. leaks.
-		/// </summary>
-		protected void StoreArguments(params object[] currentArgs) => lastArgs = currentArgs.Clone() as object[];
-
-		/// <summary>
-		/// Checks if the two arguments are Equal or not
-		/// </summary>
-		private bool AreEqual(object currentArg, object lastArg)
+		protected void StoreResult(object result)
 		{
-			//Are they the same thing ?
-			if (object.ReferenceEquals(currentArg, lastArg)) return true;
-
-			//Standard Equal comparison, will handle if either left or right is null
-			return object.Equals(currentArg, lastArg);
+			previousResult = result;
 		}
 
 		/// <summary>
-		/// Forgets anything that was memoized
+		/// Clones (shallowly) and stores the array specified on this instance last arguments.
+		/// The arguments store are used to decide if to call or not the memoized function.
+		/// Watch out for mem. leaks. as arguments will live as long as the memoized function.
+		/// </summary>
+		protected void StoreArguments(params object[] currentArguments)
+		{
+			previousArguments = currentArguments.Clone() as object[];
+		}
+
+		/// <summary>
+		/// Checks if the two arguments are Equal or not, optionally using the supplied EqualityComparers
+		/// </summary>
+		private bool AreEqual(object current, object previous)
+		{
+			//Are they the same thing ?
+			if (object.ReferenceEquals(current, previous)) return true;
+
+			Type currentArgumentValueType = current.GetType();
+			Type previousArgumentValueType = previous.GetType();
+
+			if (currentArgumentValueType != previousArgumentValueType) throw new InvalidOperationException("An argument changed type since last time it was supplied.");
+
+			//Fetch a comparer for the arguments
+			IEqualityComparerWrapper argumentsComparer = ComparersStore.GetMethodInfo.MakeGenericMethod(currentArgumentValueType).Invoke(comparersStore, parameters: null) as IEqualityComparerWrapper;
+
+			//Compare the arguments			
+			return argumentsComparer.Compare(current, previous);
+		}
+
+		/// <summary>
+		/// Forgets everything that was memoized
 		/// </summary>
 		public void Reset()
 		{
-			lastArgs = null;
-			lastResult = null;
+			previousArguments = null;
+			previousResult = null;
 		}
 	}
 }

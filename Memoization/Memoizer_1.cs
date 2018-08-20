@@ -16,7 +16,7 @@ namespace Memoization
 
 		public TOut Call(T1 arg1)
 		{
-			if (ArgsMatchPreviousCall(arg1)) return LastResult<TOut>();
+			if (ArgsMatchPreviousCall(arg1)) return PreviousResult<TOut>();
 
 			TOut result = func(arg1);
 
