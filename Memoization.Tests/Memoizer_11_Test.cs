@@ -1,5 +1,6 @@
 using Moq;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Memoization.Tests
@@ -112,6 +113,36 @@ namespace Memoization.Tests
 
 			//Assert
 			fnSpy.Verify(f => f(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), Times.Exactly(2));
+		}
+
+		[Fact]
+		public void Uses_supplied_equality_comparer_to_test_arguments_equaility()
+		{
+			//Arrange
+			var fnSpy = new Mock<Func<string, string, string, string, string, string, string, string, string, string, string, string>>();
+
+			var comparerMock = new Mock<IEqualityComparer<string>>();
+
+			//All the strings are equal
+			comparerMock.Setup(s => s.Equals(It.IsAny<string>(), It.IsAny<string>()))
+				.Returns(true);
+
+			var memoizedFn = Memoizer.Memoize(fnSpy.Object);
+
+			memoizedFn.WithEqualityComparer(comparerMock.Object);
+
+			//Act
+			memoizedFn.Call("ayYyy", "ayYyy", "ayYyy", "ayYyy", "ayYyy", "ayYyy", "ayYyy", "ayYyy", "ayYyy", "ayYyy", "ayYyy");
+			memoizedFn.Call("ayYYyy", "ayYYyy", "ayYYyy", "ayYYyy", "ayYYyy", "ayYYyy", "ayYYyy", "ayYYyy", "ayYYyy", "ayYYyy", "ayYYyy");
+			memoizedFn.Call("ayYYYy", "ayYYYy", "ayYYYy", "ayYYYy", "ayYYYy", "ayYYYy", "ayYYYy", "ayYYYy", "ayYYYy", "ayYYYy", "ayYYYy");
+
+			//Assert
+
+			//Function is called only once because the comparer returns always 'true'
+			fnSpy.Verify(f => f(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+			//The comparer was called twice, the first time is excluded because there are no previous arguments
+			comparerMock.Verify(c => c.Equals(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(22));
 		}
 	}
 }

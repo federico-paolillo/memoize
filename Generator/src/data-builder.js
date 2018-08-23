@@ -73,10 +73,6 @@ function getReferenceTypeFuncGenericParametersString(genericTypesCount) {
 
 }
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function getFirstRunParametersString(genericTypesCount) {
 
     const temporaryList = [];
@@ -106,17 +102,19 @@ function getSecondRunParametersString(genericTypesCount) {
 }
 
 function getReferenceTypeParametersString(genericTypesCount) {
+    return Array(genericTypesCount).fill('null').join(', ');
+}
 
-    const temporaryList = [];
+function lmao(pattern, repetitions) {
+    return Array(repetitions).fill(pattern).join(', ');
+}
 
-    for (let index = 0; index < genericTypesCount; index++) {
-        temporaryList.push('null');
-    }
+function getItIsAnysSequence(genericTypesCount) {
+    return Array(genericTypesCount).fill('It.IsAny<string>()').join(', ');
+}
 
-    const result = temporaryList.join(', ');
-
-    return result;
-
+function getStringTypeParametersString(genericTypesCount) {
+    return Array(genericTypesCount).fill('string').join(', ');
 }
 
 /**
@@ -136,6 +134,10 @@ exports.buildClassData = function (genericTypesCount) {
 
 }
 
+/**
+ * Prepares all the data required to generate a memoizer test C# class with Mustache.
+ * @param {number} genericArgumentsCount Number of generic arguments of the C# class generated.
+ */
 exports.buildTestData = function (genericTypesCount) {
 
     return {
@@ -145,6 +147,12 @@ exports.buildTestData = function (genericTypesCount) {
         firstRunParameters: getFirstRunParametersString(genericTypesCount),
         secondRunParameters: getSecondRunParametersString(genericTypesCount),
         referenceTypeParameters: getReferenceTypeParametersString(genericTypesCount),
+        stringTypeParameters: getStringTypeParametersString(genericTypesCount + 1),
+        itIsAnysSequence: getItIsAnysSequence(genericTypesCount),        
+        equalityComparerCallsCount: genericTypesCount * 2,
+        ayYyy: lmao("\"ayYyy\"", genericTypesCount),
+        ayYYyy: lmao("\"ayYYyy\"", genericTypesCount),
+        ayYYYy: lmao("\"ayYYYy\"", genericTypesCount),
         genericTypesCount
 
     };

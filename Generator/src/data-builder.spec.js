@@ -30,6 +30,12 @@ describe('Builder.buildTestData', function () {
         const secondRunParametersExpected = '10, 11, 12, 13';
         const referenceTypeParametersExpected = 'null, null, null, null';
         const genericTypesCountExpected = 4;
+        const ayYyyExpected = "'ayYyy', 'ayYyy', 'ayYyy', 'ayYyy'";
+        const ayYYyyExpected = "'ayYYyy', 'ayYYyy', 'ayYYyy', 'ayYYyy'";
+        const ayYYYyExpected = "'ayYYYy', 'ayYYYy', 'ayYYYy', 'ayYYYy'";
+        const equalityComparerCallsCountExpected = 8;
+        const itIsAnysSequenceExpected = 'It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()';
+        const stringTypeParametersExpected = 'string, string, string, string';
 
         const result = Builder.buildTestData(4);
 
@@ -39,6 +45,12 @@ describe('Builder.buildTestData', function () {
         expect(result.secondRunParameters).to.equal(secondRunParametersExpected);
         expect(result.referenceTypeParameters).to.equal(referenceTypeParametersExpected);
         expect(result.genericTypesCount).to.equal(genericTypesCountExpected);
+        expect(result.ayYyy).to.equal(ayYyyExpected);
+        expect(result.ayYYyy).to.equal(ayYYyyExpected);
+        expect(result.ayYYYy).to.equal(ayYYYyExpected);
+        expect(result.equalityComparerCallsCount).to.equal(equalityComparerCallsCountExpected);
+        expect(result.itIsAnysSequence).to.equal(itIsAnysSequenceExpected);
+        expect(result.stringTypeParameters).to.equal(stringTypeParametersExpected);
 
     });
 

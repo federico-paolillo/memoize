@@ -1,5 +1,6 @@
 ﻿using Memoization.Arguments;
 using System;
+using System.Collections.Generic;
 
 namespace Memoization
 {
@@ -70,13 +71,23 @@ namespace Memoization
 			Type currentArgumentValueType = current.GetType();
 			Type previousArgumentValueType = previous.GetType();
 
-			if (currentArgumentValueType != previousArgumentValueType) throw new InvalidOperationException("An argument changed type since last time it was supplied.");
+			if (currentArgumentValueType != previousArgumentValueType) throw new InvalidOperationException("An argument Type changed since last time it was supplied.");
 
 			//Fetch a comparer for the arguments
 			IEqualityComparerWrapper argumentsComparer = ComparersStore.GetMethodInfo.MakeGenericMethod(currentArgumentValueType).Invoke(comparersStore, parameters: null) as IEqualityComparerWrapper;
 
 			//Compare the arguments			
 			return argumentsComparer.Compare(current, previous);
+		}
+
+		/// <summary>
+		/// Add a custom IEqualityComparer that will be used to compare any argument of type T
+		/// </summary>
+		public void WithEqualityComparer<T>(IEqualityComparer<T> equalityComparer)
+		{
+			if (equalityComparer == null) throw new ArgumentNullException(nameof(equalityComparer));
+
+			comparersStore.Add<T>(equalityComparer);
 		}
 
 		/// <summary>
