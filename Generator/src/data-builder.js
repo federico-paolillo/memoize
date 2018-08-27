@@ -1,104 +1,39 @@
 function getGenericArgumentsString(genericTypesCount) {
 
-    const temporaryList = [];
+    return [
+        ...Array(genericTypesCount).fill().map((_, i) => `T${i + 1}`),
+        'TOut'
+    ].join(', ');
 
-    for (let index = 0; index < genericTypesCount; index++) {
-        temporaryList.push(`T${index + 1}`);
-    }
-
-    temporaryList.push('TOut');
-
-    const result = temporaryList.join(', ');
-
-    return result;
 }
 
 function getGenericParametersDeclarationString(genericTypesCount) {
-
-    const temporaryList = [];
-
-    for (let index = 0; index < genericTypesCount; index++) {
-        temporaryList.push(`T${index + 1} arg${index + 1}`);
-    }
-
-    const result = temporaryList.join(', ');
-
-    return result;
-
+    return Array(genericTypesCount).fill().map((_, i) => `T${i + 1} arg${i + 1}`).join(', ');
 }
 
 function getGenericParametersInvocationString(genericTypesCount) {
-
-    const temporaryList = [];
-
-    for (let index = 0; index < genericTypesCount; index++) {
-        temporaryList.push(`arg${index + 1}`);
-    }
-
-    const result = temporaryList.join(', ');
-
-    return result;
-
+    return Array(genericTypesCount).fill().map((_, i) => `arg${i + 1}`).join(', ');
 }
 
 function getValueTypeFuncGenericParametersString(genericTypesCount) {
-
-    const temporaryList = [];
-
-    for (let index = 0; index < genericTypesCount; index++) {
-        temporaryList.push(`int`);
-    }
-
-    temporaryList.push(`int`);
-
-    const result = temporaryList.join(', ');
-
-    return result;
-
+    return Array(genericTypesCount + 1).fill('int').join(', ');
 }
 
 function getReferenceTypeFuncGenericParametersString(genericTypesCount) {
 
-    const temporaryList = [];
-
-    for (let index = 0; index < genericTypesCount; index++) {
-        temporaryList.push(`object`);
-    }
-
-    temporaryList.push(`int`);
-
-    const result = temporaryList.join(', ');
-
-    return result;
+    return [
+        ...Array(genericTypesCount).fill('object'),
+        'int'
+    ].join(', ');
 
 }
 
 function getFirstRunParametersString(genericTypesCount) {
-
-    const temporaryList = [];
-
-    for (let index = 0; index < genericTypesCount; index++) {
-        temporaryList.push(index);
-    }
-
-    const result = temporaryList.join(', ');
-
-    return result;
-
+    return Array(genericTypesCount).fill().map((_, i) => i).join(', ');
 }
 
 function getSecondRunParametersString(genericTypesCount) {
-
-    const temporaryList = [];
-
-    for (let index = 0; index < genericTypesCount; index++) {
-        temporaryList.push(index + 10);
-    }
-
-    const result = temporaryList.join(', ');
-
-    return result;
-
+    return Array(genericTypesCount).fill().map((_, i) => 10 + i).join(', ');
 }
 
 function getReferenceTypeParametersString(genericTypesCount) {
@@ -148,7 +83,7 @@ exports.buildTestData = function (genericTypesCount) {
         secondRunParameters: getSecondRunParametersString(genericTypesCount),
         referenceTypeParameters: getReferenceTypeParametersString(genericTypesCount),
         stringTypeParameters: getStringTypeParametersString(genericTypesCount + 1),
-        itIsAnysSequence: getItIsAnysSequence(genericTypesCount),        
+        itIsAnysSequence: getItIsAnysSequence(genericTypesCount),
         equalityComparerCallsCount: genericTypesCount * 2,
         ayYyy: lmao("\"ayYyy\"", genericTypesCount),
         ayYYyy: lmao("\"ayYYyy\"", genericTypesCount),

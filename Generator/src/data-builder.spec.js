@@ -30,12 +30,12 @@ describe('Builder.buildTestData', function () {
         const secondRunParametersExpected = '10, 11, 12, 13';
         const referenceTypeParametersExpected = 'null, null, null, null';
         const genericTypesCountExpected = 4;
-        const ayYyyExpected = "'ayYyy', 'ayYyy', 'ayYyy', 'ayYyy'";
-        const ayYYyyExpected = "'ayYYyy', 'ayYYyy', 'ayYYyy', 'ayYYyy'";
-        const ayYYYyExpected = "'ayYYYy', 'ayYYYy', 'ayYYYy', 'ayYYYy'";
+        const ayYyyExpected = "\"ayYyy\", \"ayYyy\", \"ayYyy\", \"ayYyy\"";
+        const ayYYyyExpected = "\"ayYYyy\", \"ayYYyy\", \"ayYYyy\", \"ayYYyy\"";
+        const ayYYYyExpected = "\"ayYYYy\", \"ayYYYy\", \"ayYYYy\", \"ayYYYy\"";
         const equalityComparerCallsCountExpected = 8;
         const itIsAnysSequenceExpected = 'It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()';
-        const stringTypeParametersExpected = 'string, string, string, string';
+        const stringTypeParametersExpected = 'string, string, string, string, string';
 
         const result = Builder.buildTestData(4);
 
