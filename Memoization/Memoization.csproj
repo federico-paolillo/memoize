@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
@@ -13,6 +13,7 @@
     <RepositoryType></RepositoryType>
     <PackageTags>memoization memoize functional functions functional-programming net-standard utility</PackageTags>
     <PackageId>FP.Memoization</PackageId>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
