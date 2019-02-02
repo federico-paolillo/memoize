@@ -22,7 +22,7 @@ Another reason for this package is that most of NuGet packages out there are out
 
 Add an `using` for `Memoization` namespace.  
 Call `Memoizer.Memoize(fn)` and pass it the function that you want to memoize.  
-You will get back and instance of `Memoizer` which you can use to control memoization for your function.  
+You will get back an instance of `Memoizer` which you can use to control memoization for your function.  
 Invoke the method `Call` from the `Memoizer` instance to execute the memoized function.  
 
 For example:  
