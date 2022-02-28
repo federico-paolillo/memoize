@@ -1,26 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
 
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="5.4.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2"/>
+        <PackageReference Include="Moq" Version="4.8.2"/>
+        <PackageReference Include="xunit" Version="2.3.1"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1"/>
+        <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Memoization.Tests.v3.ncrunchproject" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.4.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
-    <PackageReference Include="Moq" Version="4.8.2" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Memoization\Memoization.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Memoization\Memoization.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="contentfiles;build"/>
+    </ItemGroup>
 
 </Project>
